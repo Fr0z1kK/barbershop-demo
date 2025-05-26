@@ -2,9 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Барбершоп – Наши услуги</title>
+  <title>Барбершоп — Наши услуги</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="styles.css" rel="stylesheet">
+  <!-- YClients виджет -->
+  <script type="text/javascript" src="https://w1449493.yclients.com/widgetJS" charset="UTF-8"></script>
+  <!-- Smart Widgets -->
+  <script src="https://res.smartwidgets.ru/app.js" defer></script>
 </head>
 <body>
   <header>
@@ -13,9 +17,8 @@
       <nav>
         <a href="#services">Услуги</a>
         <a href="#gallery">Галерея</a>
-        <a href="#reviews">Отзывы</a>
         <a href="#contacts">Контакты</a>
-        <a href="#booking">Записаться</a>
+        <a href="#reviews">Отзывы</a>
       </nav>
       <div class="burger" tabindex="0">
         <span></span><span></span><span></span>
@@ -23,141 +26,125 @@
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero hero-custom-bg">
     <div class="hero-content">
       <div class="logo">Здравствуйте!</div>
-      <div class="slogan">Мужской салон красоты «Собрание» — это идеальное место для тех, кто хочет выглядеть стильно и ухоженно.</div>
-      <a href="#booking" class="btn-main">Записаться онлайн</a>
+      <div class="slogan">Мужской салон красоты «Собрание» — это идеальное место для тех, кто хочет выглядеть стильно и уверенно.</div>
+      <div id="yclients-widget" style="display:none;"></div>
+      <!--a href="#" class="btn-main yclients-btn-main">Записаться через YClients</a>-->
     </div>
   </section>
-
   <section class="services" id="services">
     <h2>Наши услуги</h2>
+    <div class="services-filters">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="haircut">Стрижки</button>
+        <button class="filter-btn" data-filter="beard">Борода</button>
+        <button class="filter-btn" data-filter="color">Окрашивание</button>
+      </div>
+    </div>
     <div class="service-cards">
-      <div class="service-card">
-        <!--span class="badge">Хит</span>-->
+      <div class="service-card" data-category="haircut beard" data-price="1800">
+        <span class="badge badge-sale" style="display:none;">Скидка 10%</span>
         <h3>Комбо Стрижка+стрижка бороды</h3>
         <div class="service-desc">Выгодный комплект: мужская стрижка и оформление бороды</div>
+        <div class="service-extra">В этом месяце действует скидка на комбинированные услуги!</div>
         <p>1 800 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="haircut" data-price="1200">
         <h3>Мужская стрижка</h3>
         <div class="service-desc">Классика и современные техники</div>
+        <div class="service-extra">В подарок — укладка!</div>
         <p>1 200 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="beard" data-price="600">
         <h3>Стрижка бороды / усов</h3>
         <div class="service-desc">Оформление и уход</div>
+        <div class="service-extra">Рекомендации по уходу бесплатно</div>
         <p>600 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="haircut beard" data-price="2200">
+        <span class="badge badge-sale" style="display:none;">Скидка 10%</span>
         <h3>Комбо Стрижка+моделирование бороды</h3>
         <div class="service-desc">Стрижка + сложное моделирование бороды</div>
+        <div class="service-extra">Скидка при заказе двух услуг</div>
         <p>2 200 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="beard" data-price="1000">
         <h3>Моделирование бороды</h3>
         <div class="service-desc">Детальная работа над формой</div>
+        <div class="service-extra">В подарок — масло для бороды</div>
         <p>1 000 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="haircut" data-price="1000">
         <h3>Детская стрижка</h3>
         <div class="service-desc">Для детей до 12 лет</div>
+        <div class="service-extra">Особый подход к каждому ребенку!</div>
         <p>1 000 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
-        <h3>Укладка</h3>
-        <div class="service-desc">Стайлинг и рекомендации по уходу</div>
-        <p>400 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
-      </div>
-      <div class="service-card">
+      <div class="service-card" data-category="haircut" data-price="400">
         <h3>Окантовка головы</h3>
         <div class="service-desc">Четкая линия и аккуратный вид</div>
+        <div class="service-extra">Быстро и аккуратно</div>
         <p>400 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="haircut" data-price="600">
         <h3>Стрижка машинкой (одна насадка)</h3>
         <div class="service-desc">Быстро, просто, аккуратно</div>
+        <div class="service-extra">Идеально для поддержания формы</div>
         <p>600 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="beard color" data-price="600">
         <h3>Тонировка бороды</h3>
         <div class="service-desc">Придание цвета и свежий вид</div>
+        <div class="service-extra">Подбор оттенка бесплатно</div>
         <p>600 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
-      <div class="service-card">
+      <div class="service-card" data-category="color" data-price="1000">
         <h3>Тонировка головы</h3>
         <div class="service-desc">Мягкое и естественное окрашивание</div>
+        <div class="service-extra">Щадящие составы</div>
         <p>1 000 ₽</p>
-        <a href="#booking" class="btn-main btn-small">Записаться</a>
       </div>
     </div>
   </section>
 
   <section class="gallery" id="gallery">
-    <h2>Галерея работ</h2>
-    <div class="gallery-grid">
+  <h2>Галерея работ</h2>
+  <div class="gallery-carousel">
+    <button class="carousel-btn prev" aria-label="Назад">&#8592;</button>
+    <div class="carousel-track">
       <img src="img/work1.jpg" alt="Работа 1">
       <img src="img/work2.jpg" alt="Работа 2">
       <img src="img/work3.jpg" alt="Работа 3">
       <img src="img/work4.jpg" alt="Работа 4">
       <img src="img/work5.jpg" alt="Работа 5">
       <img src="img/work6.jpg" alt="Работа 6">
-      <!-- Добавьте свои фото -->
     </div>
-  </section>
+    <button class="carousel-btn next" aria-label="Вперёд">&#8594;</button>
+  </div>
+  <div class="carousel-dots"></div>
+</section>
 
-  <section class="reviews" id="reviews">
-    <h2>Отзывы клиентов</h2>
-    <div class="reviews-list">
-      <div class="review-card">
-        <img src="img/rev1.jpg" alt="Алексей">
-        <div>
-          <strong>Алексей</strong>
-          <p>Очень понравился сервис и атмосфера, стригусь только здесь!</p>
-        </div>
-      </div>
-      <div class="review-card">
-        <img src="img/rev2.jpg" alt="Дмитрий">
-        <div>
-          <strong>Дмитрий</strong>
-          <p>Записался онлайн, быстро и удобно. Мастера — профи!</p>
-        </div>
-      </div>
-      <div class="review-card">
-        <img src="img/rev3.jpg" alt="Иван">
-        <div>
-          <strong>Иван</strong>
-          <p>Качественно, аккуратно, с вниманием к деталям. Спасибо!</p>
-        </div>
-      </div>
-    </div>
-    <form class="review-form">
-      <input type="text" placeholder="Ваше имя" required>
-      <textarea placeholder="Ваш отзыв" required></textarea>
-      <button type="submit" class="btn-main">Оставить отзыв</button>
-    </form>
+  <section class="sw-section" id="reviews">
+    <h2>Отзывы и обратная связь</h2>
+    <div class="sw-app" data-app="b1bba21e31b61727e9c357d9edaf4b60"></div>
   </section>
 
   <section class="contacts" id="contacts">
     <h2>Контакты</h2>
     <div class="contacts-info">
-      <div><b>Телефон:</b> <a href="tel:+79999999999" class="call-btn">+7 (999) 999-99-99</a></div>
-      <div><b>Адрес:</b> г. ВашГород, ул. Примерная, 1</div>
-      <div><b>Время работы:</b> 10:00 – 21:00, без выходных</div>
+      <div><b>Телефон:</b> <a href="tel:+79624008822" class="call-btn">+7‒962‒400‒88‒22</a></div>
+      <div><b>Адрес:</b> г. Ставрополь,​50 лет ВЛКСМ, 11/3​1 этаж</div>
+      <div><b>Время работы:</b> Пн — Чт 10:00 – 21:00, Пт — Сб 10:00–22:00</div>
+      <div><b>Воскресенье</b>10:00–21:00</div>
     </div>
-    <div class="contacts-map">
-      <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3b6e1568d5f8d0c7cba3d2b8e3d7a2b83a9d4e6e6bcd1a6b5e3d0b8d2c3a2b7a&amp;source=constructor" width="100%" height="280" frameborder="0"></iframe>
+    <div class="contacts-map contacts-map-full">
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?ll=41.924670%2C45.017206&z=17.07&mode=search&whatshere[point]=41.924670,45.017206&whatshere[zoom]=17&origin=jsapi_2_1_79&from=api-maps&oid=203457685264"
+        width="100%" height="360" frameborder="0" allowfullscreen
+        title="Барбершоп Собрание на карте"></iframe>
     </div>
   </section>
 
