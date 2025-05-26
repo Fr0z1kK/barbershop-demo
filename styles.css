@@ -125,6 +125,7 @@ nav a:hover {
   margin-top: 16px;
   cursor: pointer;
 }
+
 .btn-main:hover, .yclients-btn-main:hover {
   background: #ffd350;
   color: #222;
@@ -559,4 +560,3 @@ footer {
   }
   .carousel-btn { width: 34px; height: 34px; font-size: 1.2rem;}
 }
-
