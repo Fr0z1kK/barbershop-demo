@@ -171,50 +171,77 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('resize', updateCarousel);
 });
+// ...другой код...
+// ...другой код...
 
-// Автоматическая инициализация YClients виджета и работа кнопки
-document.addEventListener('DOMContentLoaded', function() {
-  // Автоинициализация YClients Widget
-  function initYClientsWidget() {
-    if (window.YC && window.YC.Widget) {
-      window.ycWidget = new window.YC.Widget({
-        companyId: 1449493, // Ваш ID компании YClients
-        container: 'yclients-widget',
-        theme: 'classic',
-        button: false
-      });
-      // При необходимости можно отобразить сам контейнер
-      var widgetDiv = document.getElementById('yclients-widget');
-      if (widgetDiv) widgetDiv.style.display = 'none';
-    } else {
-      setTimeout(initYClientsWidget, 300);
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  const wrapper = document.querySelector('.carousel-track-wrapper');
+  const track = document.querySelector('.carousel-track');
+  const slides = Array.from(track.querySelectorAll('img'));
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  const dotsContainer = document.querySelector('.carousel-dots');
+  let current = 0;
+
+  function getSlideWidth() {
+    return wrapper.offsetWidth;
   }
-  initYClientsWidget();
 
-  // Кнопка открытия YClients
-  const btn = document.querySelector('.yclients-btn-main');
-  if (btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (window.ycWidget && typeof window.ycWidget.open === 'function') {
-        window.ycWidget.open();
-      }
+  function showSlide(idx) {
+    current = (idx + slides.length) % slides.length;
+    const slideWidth = getSlideWidth();
+    track.style.transform = `translateX(-${current * slideWidth}px)`;
+    dotsContainer.querySelectorAll('button').forEach((dot, i) => {
+      dot.classList.toggle('active', i === current);
     });
   }
-});
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filter = btn.getAttribute('data-filter');
-    document.querySelectorAll('.services-list li').forEach(li => {
-      const cats = li.getAttribute('data-category').split(' ');
-      if (filter === "all" || cats.includes(filter)) {
-        li.style.display = "";
-      } else {
-        li.style.display = "none";
-      }
+
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const btn = document.createElement('button');
+      if (idx === current) btn.classList.add('active');
+      btn.addEventListener('click', () => showSlide(idx));
+      dotsContainer.appendChild(btn);
     });
+  }
+
+  prevBtn.addEventListener('click', () => showSlide(current - 1));
+  nextBtn.addEventListener('click', () => showSlide(current + 1));
+
+  // Swipe для мобильных
+  let startX = null;
+  track.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
   });
+  track.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const endX = e.changedTouches[0].clientX;
+    if (endX - startX > 40) prevBtn.click();
+    else if (startX - endX > 40) nextBtn.click();
+    startX = null;
+  });
+
+  // Resize - пересчитываем позицию и ширину слайда
+  window.addEventListener('resize', () => {
+    setTrackWidth();
+    showSlide(current);
+  });
+
+  function setTrackWidth() {
+    const slideWidth = getSlideWidth();
+    track.style.width = `${slides.length * slideWidth}px`;
+    slides.forEach(slide => {
+      slide.style.width = `${slideWidth}px`;
+      slide.style.height = wrapper.offsetHeight + 'px';
+    });
+  }
+
+  function init() {
+    setTrackWidth();
+    createDots();
+    showSlide(current);
+  }
+
+  init();
 });
