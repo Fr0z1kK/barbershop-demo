@@ -2,153 +2,155 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Барбершоп — Наши услуги</title>
+  <title>Барбершоп – Наши услуги</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for enhanced typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
-  <!-- YClients виджет -->
-  <script type="text/javascript" src="https://w1449493.yclients.com/widgetJS" charset="UTF-8"></script>
-  <!-- Smart Widgets -->
-  <script src="https://res.smartwidgets.ru/app.js" defer></script>
 </head>
 <body>
   <header>
     <div class="container header-nav">
-      <div class="logo">Собрание</div>
+      <div class="logo animate-logo">Собрание</div>
       <nav>
         <a href="#services">Услуги</a>
         <a href="#gallery">Галерея</a>
-        <a href="#contacts">Контакты</a>
         <a href="#reviews">Отзывы</a>
+        <a href="#contacts">Контакты</a>
       </nav>
-      <div class="burger" tabindex="0">
+      <div class="burger" tabindex="0" aria-label="Открыть меню" aria-expanded="false">
         <span></span><span></span><span></span>
       </div>
     </div>
   </header>
 
-  <section class="hero hero-custom-bg">
-    <div class="hero-content">
-      <div class="logo">Здравствуйте!</div>
-      <div class="slogan">Мужской салон красоты «Собрание» — это идеальное место для тех, кто хочет выглядеть стильно и уверенно.</div>
-      <div id="yclients-widget" style="display:none;"></div>
-      <!--a href="#" class="btn-main yclients-btn-main">Записаться через YClients</a>-->
+  <section class="hero" id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-content">
+      <div class="logo animate-hello hello-bg">Здравствуйте!</div>
+      <div class="slogan">
+        Мужской салон красоты «Собрание» — идеальное место для стильных перемен, заботы о себе и отличного настроения. <br>Почувствуйте атмосферу настоящего мужского клуба!</br>
+      </div>
     </div>
+    <div class="hero-overlay"></div>
   </section>
+
   <section class="services" id="services">
     <h2>Наши услуги</h2>
-    <div class="services-filters">
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">Все</button>
-        <button class="filter-btn" data-filter="haircut">Стрижки</button>
-        <button class="filter-btn" data-filter="beard">Борода</button>
-        <button class="filter-btn" data-filter="color">Окрашивание</button>
-      </div>
-    </div>
     <div class="service-cards">
-      <div class="service-card" data-category="haircut beard" data-price="1800">
-        <span class="badge badge-sale" style="display:none;">Скидка 10%</span>
+      <div class="service-card tilt">
         <h3>Комбо Стрижка+стрижка бороды</h3>
         <div class="service-desc">Выгодный комплект: мужская стрижка и оформление бороды</div>
-        <div class="service-extra">В этом месяце действует скидка на комбинированные услуги!</div>
         <p>1 800 ₽</p>
       </div>
-      <div class="service-card" data-category="haircut" data-price="1200">
+      <div class="service-card tilt">
         <h3>Мужская стрижка</h3>
         <div class="service-desc">Классика и современные техники</div>
-        <div class="service-extra">В подарок — укладка!</div>
         <p>1 200 ₽</p>
       </div>
-      <div class="service-card" data-category="beard" data-price="600">
+      <div class="service-card tilt">
         <h3>Стрижка бороды / усов</h3>
         <div class="service-desc">Оформление и уход</div>
-        <div class="service-extra">Рекомендации по уходу бесплатно</div>
         <p>600 ₽</p>
       </div>
-      <div class="service-card" data-category="haircut beard" data-price="2200">
-        <span class="badge badge-sale" style="display:none;">Скидка 10%</span>
+      <div class="service-card tilt">
         <h3>Комбо Стрижка+моделирование бороды</h3>
         <div class="service-desc">Стрижка + сложное моделирование бороды</div>
-        <div class="service-extra">Скидка при заказе двух услуг</div>
         <p>2 200 ₽</p>
       </div>
-      <div class="service-card" data-category="beard" data-price="1000">
+      <div class="service-card tilt">
         <h3>Моделирование бороды</h3>
         <div class="service-desc">Детальная работа над формой</div>
-        <div class="service-extra">В подарок — масло для бороды</div>
         <p>1 000 ₽</p>
       </div>
-      <div class="service-card" data-category="haircut" data-price="1000">
+      <div class="service-card tilt">
         <h3>Детская стрижка</h3>
         <div class="service-desc">Для детей до 12 лет</div>
-        <div class="service-extra">Особый подход к каждому ребенку!</div>
         <p>1 000 ₽</p>
       </div>
-      <div class="service-card" data-category="haircut" data-price="400">
-        <h3>Окантовка головы</h3>
-        <div class="service-desc">Четкая линия и аккуратный вид</div>
-        <div class="service-extra">Быстро и аккуратно</div>
+      <div class="service-card tilt">
+        <h3>Укладка</h3>
+        <div class="service-desc">Стайлинг и рекомендации по уходу</div>
         <p>400 ₽</p>
       </div>
-      <div class="service-card" data-category="haircut" data-price="600">
+      <div class="service-card tilt">
+        <h3>Окантовка головы</h3>
+        <div class="service-desc">Четкая линия и аккуратный вид</div>
+        <p>400 ₽</p>
+      </div>
+      <div class="service-card tilt">
         <h3>Стрижка машинкой (одна насадка)</h3>
         <div class="service-desc">Быстро, просто, аккуратно</div>
-        <div class="service-extra">Идеально для поддержания формы</div>
         <p>600 ₽</p>
       </div>
-      <div class="service-card" data-category="beard color" data-price="600">
+      <div class="service-card tilt">
         <h3>Тонировка бороды</h3>
         <div class="service-desc">Придание цвета и свежий вид</div>
-        <div class="service-extra">Подбор оттенка бесплатно</div>
         <p>600 ₽</p>
       </div>
-      <div class="service-card" data-category="color" data-price="1000">
+      <div class="service-card tilt">
         <h3>Тонировка головы</h3>
         <div class="service-desc">Мягкое и естественное окрашивание</div>
-        <div class="service-extra">Щадящие составы</div>
         <p>1 000 ₽</p>
       </div>
+    </div>
+  </section>
+<script type="text/javascript" src="https://w1449493.yclients.com/widgetJS" charset="UTF-8"></script>
+  <section class="gallery" id="gallery">
+    <h2>Галерея работ</h2>
+    <div class="gallery-grid">
+      <img src="img/work1.jpg" alt="Работа 1" loading="lazy">
+      <img src="img/work2.jpg" alt="Работа 2" loading="lazy">
+      <img src="img/work3.jpg" alt="Работа 3" loading="lazy">
+      <img src="img/work4.jpg" alt="Работа 4" loading="lazy">
+      <img src="img/work5.jpg" alt="Работа 5" loading="lazy">
+      <img src="img/work6.jpg" alt="Работа 6" loading="lazy">
+      <img src="img/work7.jpg" alt="Работа 7" loading="lazy">
+      <img src="img/work8.jpg" alt="Работа 8" loading="lazy">
+      <img src="img/work9.jpg" alt="Работа 9" loading="lazy">
+      <img src="img/work10.jpg" alt="Работа 10" loading="lazy">
+      <img src="img/work11.jpg" alt="Работа 11" loading="lazy">
+      <img src="img/work12.jpg" alt="Работа 12" loading="lazy">
+      <img src="img/work13.jpg" alt="Работа 13" loading="lazy">
+      <img src="img/work14.jpg" alt="Работа 14" loading="lazy">
+      <img src="img/work15.jpg" alt="Работа 15" loading="lazy">
+      <img src="img/work16.jpg" alt="Работа 16" loading="lazy">
+      <img src="img/work17.jpg" alt="Работа 17" loading="lazy">
+      <img src="img/work18.jpg" alt="Работа 18" loading="lazy">
+      <img src="img/work19.jpg" alt="Работа 19" loading="lazy">
     </div>
   </section>
 
-  <section class="gallery" id="gallery">
-  <h2>Галерея работ</h2>
-  <div class="gallery-carousel">
-    <div class="carousel-track-wrapper">
-      <button class="carousel-btn prev" aria-label="Назад">&#8592;</button>
-      <div class="carousel-track">
-        <img src="img/work1.jpg" alt="Работа 1">
-        <img src="img/work2.jpg" alt="Работа 2">
-        <img src="img/work3.jpg" alt="Работа 3">
-        <img src="img/work4.jpg" alt="Работа 4">
-        <img src="img/work5.jpg" alt="Работа 5">
-        <img src="img/work6.jpg" alt="Работа 6">
-      </div>
-      <button class="carousel-btn next" aria-label="Вперёд">&#8594;</button>
-    </div>
-    <div class="carousel-dots"></div>
-  </div>
-</section>
-<script src="https://res.smartwidgets.ru/app.js" defer></script>
-<div class="sw-app" data-app="b1bba21e31b61727e9c357d9edaf4b60"></div>
+  <section class="reviews" id="reviews">
+    <h2>Отзывы</h2>
+       <!-- 2ГИС отзывы -->
+    <div class="sw-app" data-app="b1bba21e31b61727e9c357d9edaf4b60"></div>
+  </section>
+
   <section class="contacts" id="contacts">
     <h2>Контакты</h2>
     <div class="contacts-info">
-      <div><b>Телефон:</b> <a href="tel:+79624008822" class="call-btn">+7‒962‒400‒88‒22</a></div>
-      <div><b>Адрес:</b> г. Ставрополь,​50 лет ВЛКСМ, 11/3​1 этаж</div>
-      <div><b>Время работы:</b> Пн — Чт 10:00 – 21:00, Пт — Сб 10:00–22:00</div>
-      <div><b>Воскресенье</b>10:00–21:00</div>
+      <div><b>Телефон:</b> <a href="tel:+79999999999" class="call-btn">+7(962)4008822</a></div>
+      <div><b>Адрес:</b> г. Ставрополь.50 лет ВЛКСМ, 11/3​, 1 этаж
+      <div><b>Время работы:</b> <br> Пн — Чт <span>10:00–21:00</span>  <br> Пт — Сб 10:00–22:00</br> Воскресенье 10:00–21:00
     </div>
-    <div class="contacts-map contacts-map-full">
-      <iframe
-        src="https://yandex.ru/map-widget/v1/?ll=41.924670%2C45.017206&z=17.07&mode=search&whatshere[point]=41.924670,45.017206&whatshere[zoom]=17&origin=jsapi_2_1_79&from=api-maps&oid=203457685264"
-        width="100%" height="360" frameborder="0" allowfullscreen
-        title="Барбершоп Собрание на карте"></iframe>
-    </div>
+    <div class="contacts-map">
+  <iframe
+    src="https://yandex.ru/map-widget/v1/?oid=203457685264&ll=41.924670%2C45.017206&z=17.07"
+    width="100%" height="400"
+    frameborder="0" allowfullscreen
+    style="min-width:120vw; min-height:400px; border: 100px;; display:block;"
+  ></iframe>
+  </div>
+</div>
+
   </section>
 
   <footer>
     &copy; 2025 Барбершоп. Все права защищены.
+    <span class="footer-emoji" title="Быть стильным легко!">💈</span>
   </footer>
   <script src="scripts.js"></script>
+  <script src="https://res.smartwidgets.ru/app.js" defer></script>
 </body>
 </html>

@@ -1,18 +1,25 @@
+// Burger menu for mobile navigation and accessibility
 document.addEventListener('DOMContentLoaded', function() {
   const burger = document.querySelector('.burger');
   const nav = document.querySelector('nav');
   if (burger && nav) {
     burger.addEventListener('click', () => {
       nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', nav.classList.contains('open'));
     });
+    // close menu on link click
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => nav.classList.remove('open'));
     });
+    // close menu on ESC
+    document.addEventListener('keydown', (e) => {
+      if(e.key === "Escape") nav.classList.remove('open');
+    });
   }
 
-  // Анимация появления секций
+  // Intersection Observer for section animation
   const animatedEls = document.querySelectorAll(
-    '.service-card, .gallery-grid img, section h2, .logo, .hero .logo, .hero .slogan, .btn-main'
+    '.service-card, .review-card, .gallery-grid img, section h2, .logo, .hero .logo, .hero .slogan, .btn-main'
   );
   if ('IntersectionObserver' in window) {
     const obsOptions = { threshold: 0.15 };
@@ -20,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.style.animationPlayState = 'running';
+          entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
@@ -30,218 +38,113 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Фильтрация услуг
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const serviceCards = Array.from(document.querySelectorAll('.service-card'));
+  // Parallax tilt for service cards
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', function(e) {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `rotateY(${x*10}deg) rotateX(${y*-10}deg) scale(1.025)`;
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = '';
+    });
+  });
 
-  let currentFilter = "all";
-  function filterAndSort() {
-    serviceCards.forEach(card => {
-      const cats = card.getAttribute('data-category').split(' ');
-      if (currentFilter === "all" || cats.includes(currentFilter)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
+  // Lightbox for gallery images
+  const galleryImgs = document.querySelectorAll('.gallery-grid img');
+  galleryImgs.forEach(img => {
+    img.addEventListener('click', function() {
+      showLightbox(img.src, img.alt);
+    });
+  });
+
+  function showLightbox(src, alt) {
+    let lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+      <div class="lightbox-bg"></div>
+      <img src="${src}" alt="${alt}">
+      <button class="lightbox-close" aria-label="Закрыть">×</button>
+    `;
+    document.body.appendChild(lightbox);
+    document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox-close').onclick =
+    lightbox.querySelector('.lightbox-bg').onclick = function() {
+      document.body.style.overflow = '';
+      lightbox.remove();
+    };
+    // ESC to close
+    document.addEventListener('keydown', function escHandler(e) {
+      if(e.key === "Escape") {
+        document.body.style.overflow = '';
+        lightbox.remove();
+        document.removeEventListener('keydown', escHandler);
       }
     });
   }
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = btn.getAttribute('data-filter');
-      filterAndSort();
-    });
-  });
-
-  // Показать бейдж "скидка" на комбо-услугах
-  document.querySelectorAll('.service-card').forEach(card => {
-    if (card.querySelector('.badge-sale')) {
-      card.addEventListener('mouseenter', () => {
-        card.querySelector('.badge-sale').style.display = "block";
-      });
-      card.addEventListener('mouseleave', () => {
-        card.querySelector('.badge-sale').style.display = "none";
-      });
-    }
-  });
-
-  filterAndSort();
-});
-// ...ваш остальной код...
-
-// Инициализация YClients Widget
-window.addEventListener('DOMContentLoaded', function() {
-  // Убедимся, что скрипт YClients уже загружен
-  if (window.YC && window.YC.Widget) {
-    window.ycWidget = new window.YC.Widget({
-      companyId: 1449493, // ваш id компании, проверьте на портале YClients
-      container: 'yclients-widget',
-      theme: 'classic',
-      button: false // мы используем свою кнопку
-    });
-  } else {
-    // Если YC.Widget еще не загрузился, ждем инициализации
-    let interval = setInterval(function() {
-      if (window.YC && window.YC.Widget) {
-        clearInterval(interval);
-        window.ycWidget = new window.YC.Widget({
-          companyId: 1449493,
-          container: 'yclients-widget',
-          theme: 'classic',
-          button: false
-        });
-      }
-    }, 300);
-  }
-});
-
-// Для вашей кнопки:
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.querySelector('.yclients-btn-main');
-  if (btn) {
-    btn.addEventListener('click', function(e) {
+  // Review form handler with instant preview
+  const reviewForm = document.getElementById('reviewForm');
+  if (reviewForm) {
+    reviewForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      if (window.ycWidget && typeof window.ycWidget.open === 'function') {
-        window.ycWidget.open();
+      const name = reviewForm.name.value.trim();
+      const text = reviewForm.review.value.trim();
+      if (name && text) {
+        const card = document.createElement('div');
+        card.className = 'review-card fade-in-card';
+        card.innerHTML = `
+          <img src="img/default-avatar.png" alt="${name}">
+          <div>
+            <strong>${escapeHtml(name)}</strong>
+            <p>${escapeHtml(text)}</p>
+          </div>
+        `;
+        document.querySelector('.reviews-list').appendChild(card);
+        reviewForm.reset();
+        reviewForm.querySelector('.form-success').hidden = false;
+        setTimeout(() => {
+          reviewForm.querySelector('.form-success').hidden = true;
+        }, 1800);
       }
     });
   }
+
+  // Utility: escape HTML
+  function escapeHtml(str) {
+    return str.replace(/[<>"'&]/g, function(s) {
+      return ({
+        "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;", "&": "&amp;"
+      })[s];
+    });
+  }
 });
-// ...другой код сайта...
-
-// Карусель для галереи работ
-document.addEventListener('DOMContentLoaded', function () {
-  const track = document.querySelector('.carousel-track');
-  const slides = Array.from(track.querySelectorAll('img'));
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
-  const dotsContainer = document.querySelector('.carousel-dots');
-  let current = 0;
-
-  function updateCarousel() {
-    const slideWidth = slides[0].clientWidth;
-    track.scrollTo({ left: slideWidth * current, behavior: 'smooth' });
-
-    dotsContainer.querySelectorAll('button').forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === current);
-    });
+/* Lightbox styles injected dynamically for demo, in prod move to CSS */
+(function() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+  .lightbox {
+    position: fixed; z-index: 10001; top: 0; left: 0; width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(30,20,10,0.7);
+    animation: fadeIn 0.25s;
   }
-
-  // Dots
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    slides.forEach((_, idx) => {
-      const btn = document.createElement('button');
-      if (idx === current) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        current = idx;
-        updateCarousel();
-      });
-      dotsContainer.appendChild(btn);
-    });
+  .lightbox-bg {
+    position: absolute; inset: 0; background: transparent; cursor: zoom-out;
   }
-
-  prevBtn.addEventListener('click', () => {
-    current = (current - 1 + slides.length) % slides.length;
-    updateCarousel();
-  });
-  nextBtn.addEventListener('click', () => {
-    current = (current + 1) % slides.length;
-    updateCarousel();
-  });
-
-  // Swipe for mobile
-  let startX = null;
-  track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
-  track.addEventListener('touchend', (e) => {
-    if (startX === null) return;
-    const endX = e.changedTouches[0].clientX;
-    if (endX - startX > 40) prevBtn.click();
-    else if (startX - endX > 40) nextBtn.click();
-    startX = null;
-  });
-
-  // Init
-  createDots();
-  updateCarousel();
-
-  window.addEventListener('resize', updateCarousel);
-});
-// ...другой код...
-// ...другой код...
-
-document.addEventListener('DOMContentLoaded', function () {
-  const wrapper = document.querySelector('.carousel-track-wrapper');
-  const track = document.querySelector('.carousel-track');
-  const slides = Array.from(track.querySelectorAll('img'));
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
-  const dotsContainer = document.querySelector('.carousel-dots');
-  let current = 0;
-
-  function getSlideWidth() {
-    return wrapper.offsetWidth;
+  .lightbox img {
+    max-width: 80vw; max-height: 80vh; border-radius: 16px; box-shadow: 0 10px 40px #0005;
+    animation: popIn 0.4s;
+    z-index: 1;
   }
-
-  function showSlide(idx) {
-    current = (idx + slides.length) % slides.length;
-    const slideWidth = getSlideWidth();
-    track.style.transform = `translateX(-${current * slideWidth}px)`;
-    dotsContainer.querySelectorAll('button').forEach((dot, i) => {
-      dot.classList.toggle('active', i === current);
-    });
+  .lightbox-close {
+    position: absolute; top: 30px; right: 35px; font-size: 2.2rem;
+    color: #fff; background: rgba(0,0,0,0.25); border: none; border-radius: 50%;
+    cursor: pointer; z-index: 2; width: 44px; height: 44px; line-height: 44px;
+    transition: background 0.23s;
   }
-
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    slides.forEach((_, idx) => {
-      const btn = document.createElement('button');
-      if (idx === current) btn.classList.add('active');
-      btn.addEventListener('click', () => showSlide(idx));
-      dotsContainer.appendChild(btn);
-    });
-  }
-
-  prevBtn.addEventListener('click', () => showSlide(current - 1));
-  nextBtn.addEventListener('click', () => showSlide(current + 1));
-
-  // Swipe для мобильных
-  let startX = null;
-  track.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
-  track.addEventListener('touchend', (e) => {
-    if (startX === null) return;
-    const endX = e.changedTouches[0].clientX;
-    if (endX - startX > 40) prevBtn.click();
-    else if (startX - endX > 40) nextBtn.click();
-    startX = null;
-  });
-
-  // Resize - пересчитываем позицию и ширину слайда
-  window.addEventListener('resize', () => {
-    setTrackWidth();
-    showSlide(current);
-  });
-
-  function setTrackWidth() {
-    const slideWidth = getSlideWidth();
-    track.style.width = `${slides.length * slideWidth}px`;
-    slides.forEach(slide => {
-      slide.style.width = `${slideWidth}px`;
-      slide.style.height = wrapper.offsetHeight + 'px';
-    });
-  }
-
-  function init() {
-    setTrackWidth();
-    createDots();
-    showSlide(current);
-  }
-
-  init();
-});
+  .lightbox-close:hover { background: rgba(35,28,17,0.43);}
+  `;
+  document.head.appendChild(style);
+})();
