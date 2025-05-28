@@ -27,11 +27,13 @@
   <section class="hero" id="hero">
   <div class="hero-bg-img"></div>
   <div class="hero-content">
-      <div class="logo animate-hello hello-bg">Здравствуйте!</div>
-      <div class="slogan">
-        Мужской салон красоты «Собрание» — идеальное место для стильных перемен, заботы о себе и отличного настроения. <br>Почувствуйте атмосферу настоящего мужского клуба!</br>
-      </div>
-    </div>
+      <div class="greeting-wrapper">
+  <span class="greeting">Здравствуйте!</span>
+</div>
+<div class="subtitle">
+  Мужской салон красоты «Собрание» — идеальное место для стильных перемен, заботы о себе и отличного настроения.<br>
+  Почувствуйте атмосферу настоящего мужского клуба!
+</div>
     <div class="hero-overlay"></div>
   </section>
 
@@ -96,32 +98,40 @@
     </div>
   </section>
 <script type="text/javascript" src="https://w1449493.yclients.com/widgetJS" charset="UTF-8"></script>
-  <section class="gallery" id="gallery">
-    <h2>Галерея работ</h2>
-    <div class="gallery-grid">
-      <img src="img/work1.jpg" alt="Работа 1" loading="lazy">
-      <img src="img/work2.jpg" alt="Работа 2" loading="lazy">
-      <img src="img/work3.jpg" alt="Работа 3" loading="lazy">
-      <img src="img/work4.jpg" alt="Работа 4" loading="lazy">
-      <img src="img/work5.jpg" alt="Работа 5" loading="lazy">
-      <img src="img/work6.jpg" alt="Работа 6" loading="lazy">
-      <img src="img/work7.jpg" alt="Работа 7" loading="lazy">
-      <img src="img/work8.jpg" alt="Работа 8" loading="lazy">
-      <img src="img/work9.jpg" alt="Работа 9" loading="lazy">
-      <img src="img/work10.jpg" alt="Работа 10" loading="lazy">
-      <img src="img/work11.jpg" alt="Работа 11" loading="lazy">
-      <img src="img/work12.jpg" alt="Работа 12" loading="lazy">
-      <img src="img/work13.jpg" alt="Работа 13" loading="lazy">
-      <img src="img/work14.jpg" alt="Работа 14" loading="lazy">
-      <img src="img/work15.jpg" alt="Работа 15" loading="lazy">
-      <img src="img/work16.jpg" alt="Работа 16" loading="lazy">
-      <img src="img/work17.jpg" alt="Работа 17" loading="lazy">
-      <img src="img/work18.jpg" alt="Работа 18" loading="lazy">
-      <img src="img/work19.jpg" alt="Работа 19" loading="lazy">
-    </div>
-  </section>
 
-  <section class="reviews" id="reviews">
+<section id="gallery" class="gallery">
+    <div class="container">
+        <h2>Галерея работ</h2>
+        
+        <!-- Swiper -->
+        <div class="swiper gallery-carousel">
+            <div class="swiper-wrapper">
+                <!-- Слайды будут добавлены через JavaScript -->
+            </div>
+            
+            <!-- Навигация -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            
+            <!-- Пагинация -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="gallery-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-image" src="" alt="">
+        <div class="modal-navigation">
+            <button class="modal-prev">&larr;</button>
+            <button class="modal-next">&rarr;</button>
+        </div>
+    </div>
+</section>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  
+<section class="reviews" id="reviews">
     <h2>Отзывы</h2>
        <!-- 2ГИС отзывы -->
     <div class="sw-app" data-app="b1bba21e31b61727e9c357d9edaf4b60"></div>

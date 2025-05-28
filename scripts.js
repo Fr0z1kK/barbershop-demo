@@ -148,3 +148,116 @@ document.addEventListener('DOMContentLoaded', function() {
   `;
   document.head.appendChild(style);
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Инициализация Swiper
+    const swiper = new Swiper('.gallery-carousel', {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 10
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 15
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 20
+            }
+        },
+        speed: 800,
+        effect: 'slide',
+        loopedSlides: 3,
+        loopFillGroupWithBlank: true
+    });
+
+    // Массив изображений
+    const galleryImages = Array.from({length: 14}, (_, i) => `img/work${i + 1}.jpg`);
+    const galleryGrid = document.querySelector('.swiper-wrapper');
+    const modal = document.querySelector('.gallery-modal');
+    const modalImg = document.querySelector('.modal-image');
+    let currentImageIndex = 0;
+
+    // Создание слайдов
+    galleryImages.forEach((src, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `<img src="${src}" alt="Работа ${index + 1}" loading="lazy">`;
+        
+        slide.addEventListener('click', () => {
+            openModal(index);
+        });
+        
+        galleryGrid.appendChild(slide);
+    });
+
+    // Модальное окно
+    function openModal(index) {
+        currentImageIndex = index;
+        modalImg.src = galleryImages[index];
+        modal.classList.add('active');
+    }
+
+    // Закрытие модального окна
+    document.querySelector('.modal-close').addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    // Навигация в модальном окне
+    document.querySelector('.modal-prev').addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        modalImg.src = galleryImages[currentImageIndex];
+    });
+
+    document.querySelector('.modal-next').addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        modalImg.src = galleryImages[currentImageIndex];
+    });
+
+    // Закрытие по клику вне изображения
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+
+    // Навигация с клавиатуры
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+            modal.classList.remove('active');
+        } else if (e.key === 'ArrowLeft') {
+            document.querySelector('.modal-prev').click();
+        } else if (e.key === 'ArrowRight') {
+            document.querySelector('.modal-next').click();
+        }
+    });
+
+    // Пауза автопрокрутки при наведении на навигацию
+    document.querySelectorAll('.swiper-button-next, .swiper-button-prev').forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            swiper.autoplay.stop();
+        });
+        button.addEventListener('mouseleave', () => {
+            swiper.autoplay.start();
+        });
+    });
+});
